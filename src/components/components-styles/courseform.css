@@ -1,0 +1,27 @@
+.container {
+    border: solid;
+    margin: auto;
+    width: 30%;
+}
+
+.buttonContainer{
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 7%;
+    width: 60%;
+}
+.courseContainer{
+    width: 50%; /* Can be in percentage also. */
+    height: auto;
+    position: relative;
+    margin-left: 20%;
+    margin-right: 10%;
+}
+.preReqContainer{
+    width: 50%; /* Can be in percentage also. */
+    height: auto;
+    position: relative;
+    margin-left: 30%;
+    margin-right: 10%;
+}

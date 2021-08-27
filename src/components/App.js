@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import Header from "./Header";
-
+import formStyle from "./components-styles/courseform.css"
 
 function App(){
   const [courses, setCourses] = useState([]);
@@ -51,20 +51,32 @@ function App(){
           </div>;
         })}
       </div>
-      <form id="Course Scheduler" onSubmit={handleCourses}>
-        <label>
-          Enter Course: 
+      <form 
+        style={formStyle}
+        className="container"
+        id="Course Scheduler" 
+        onSubmit={handleCourses}>
+        <div 
+        style={formStyle}
+        className="buttonContainer">  
+          <input type="button" name="addprereqs" value='Add Prereq' onClick={addInput}/>
+          <input type="button" name="removeprereq" value='Remove Prereq' onClick={removeInput}/>
+          <input type="submit" value="Submit"  />
+        </div>
+        <label
+        style={formStyle}
+        className="courseContainer">
+          Enter Course:{' '}
           <input type="text" name="courses" />
         </label>
         {preReqList.map((prereqs,index) => {
-          return <label key={index}>
-            Prereq {index+1}:
+          return <label key={index}
+          style={formStyle}
+          className="preReqContainer">
+            Prereq:{' '}
             <input type="text" name="prereqs" />
         </label>
         })}
-        <input type="button" name="addprereqs" value='Add Prereq' onClick={addInput}/>
-        <input type="button" name="removeprereq" value='remove prereq' onClick={removeInput}/>
-        <input type="submit" value="Submit"  />
       </form>      
     </div>
  );
