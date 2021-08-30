@@ -1,0 +1,12 @@
+.appFormContainer {
+    display: flex;
+    justify-content: center;
+    margin-right: 1rem;
+}
+
+.appContainer {
+    display: flex;
+    justify-content:center;
+    flex-direction: row-reverse;
+    align-items: flex-start;    
+}

@@ -1,0 +1,14 @@
+.container {
+    border: solid;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    padding-left: 5%;
+    padding-right: 5%;
+}
+
+.buttonCourseAndPreReqContainer{
+    position: relative;
+    display: flex;
+    flex-direction: row;
+}
