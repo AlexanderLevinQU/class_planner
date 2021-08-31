@@ -3,6 +3,7 @@ import Header from "./Header";
 import formStyle from "./components-styles/courseform.css"
 import listStyle from "./components-styles/liststyle.css"
 import appStyles from "./components-styles/appStyles.css"
+import {TopologicalSort, CreateCourseGraph, CheckIfGraphCyclical, GetDistinctCourses} from "./ClassSchedulingUtils"
 
 function App(){
   const [courses, setCourses] = useState([]);
@@ -18,11 +19,10 @@ function App(){
         prereq.push(element.value);
       })
     }else if(event.target.elements.prereqs?.value) {
-      prereq = event.target.elements.prereqs.value;
+      prereq = [event.target.elements.prereqs.value];
     } else { 
       prereq=''
     }
-    console.log(prereq);
     const course = event.target.elements.courses.value;
     setCourses(courses.concat({course: course ,prereq: prereq}));
     document.getElementById("Course Scheduler").reset();
@@ -40,6 +40,42 @@ function App(){
     setPreReqList(list);
   }
 
+  function createClassSchedule(event){
+    event.preventDefault();
+    const courseGraph = CreateCourseGraph(courses);
+    const distinctCourses = GetDistinctCourses(courseGraph);
+    const visited = {};
+    const path = {};
+    distinctCourses.forEach(value=>{
+      visited[value] = false;
+      path[value] = false;
+      if (!(value in courseGraph)){
+        courseGraph[value] = new Set();
+      }
+    });
+    let check = false;
+    for(const course in courseGraph){
+      if(CheckIfGraphCyclical(course,courseGraph,visited,path)){
+        check = true;
+        break;
+      }
+    }
+    if(check){
+      console.log('Class Schedule is impossible to take');
+    }else{
+      distinctCourses.forEach(value=>{
+        visited[value] = false;
+      });
+      const stack = []
+      for(const course of distinctCourses){
+        if(visited[course] === false){
+          TopologicalSort(course,visited,courseGraph,stack);
+        }
+      }
+      console.log(stack);
+    }
+  }
+
   return (
     <div className="App">
       <Header />
@@ -48,14 +84,17 @@ function App(){
         <div 
             style={listStyle}
             className="listContainer">
-            {courses.map((course,index) => {
-              return <div 
-                key={index}>
-                  Course: {course['course']}
-                  {' '}
-                  PreReqs: {course['prereq']}
-              </div>;
-            })}
+            <div>
+              <button onClick={createClassSchedule}>Create Course Schedule</button>
+            </div>
+              {courses.map((course,index) => {
+                return <div 
+                  key={index}>
+                    Course: {course['course']}
+                    {' '}
+                    PreReqs: {course['prereq']}
+                </div>;
+              })}
         </div>
         <div 
           style={appStyles}
