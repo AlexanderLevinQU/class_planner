@@ -16,6 +16,7 @@
     justify-content:center;
     flex-direction: row;
     align-items: flex-start;
+    margin-top: 1em;
 }
 
 .appCourseScheduleContainer {
@@ -24,4 +25,14 @@
     flex-direction:row;
     flex-wrap: wrap;
     align-items: flex-start;
+    padding: 1em;
+}
+.cardContentStyle{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    width: 10em;
+    height: 6em;
+    text-align: center;
 }

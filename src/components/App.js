@@ -28,21 +28,28 @@ function App(){
 
   function handleCourses(event){
     event.preventDefault();
-    // Check if array for prereqs
-    let prereq;
-    if(event.target.elements.prereqs?.length){
-      prereq = []
-      event.target.elements.prereqs.forEach(element => {
-        prereq.push(element.value);
-      })
-    }else if(event.target.elements.prereqs?.value) {
-      prereq = [event.target.elements.prereqs.value];
-    } else { 
-      prereq=''
+    if(event.target.elements.courses?.value == null || event.target.elements.courses?.value.trim() === '' ){
+      document.getElementById("Course Scheduler").reset();
+    }else{
+      // Check if array for prereqs
+      let prereq;
+      if(event.target.elements.prereqs?.length){
+        prereq = []
+        event.target.elements.prereqs.forEach(element => {
+          prereq.push(element.value);
+        })
+        const course = event.target.elements.courses.value;
+        setCourses(courses.concat({course: course ,prereq: prereq}));
+      }else if(event.target.elements.prereqs?.value) {
+        prereq = [event.target.elements.prereqs.value];
+        const course = event.target.elements.courses.value;
+        setCourses(courses.concat({course: course ,prereq: prereq}));
+      } else { 
+        const course = event.target.elements.courses.value;
+        setCourses(courses.concat({course: course}));
+      }
+      document.getElementById("Course Scheduler").reset();
     }
-    const course = event.target.elements.courses.value;
-    setCourses(courses.concat({course: course ,prereq: prereq}));
-    document.getElementById("Course Scheduler").reset();
   }
 
   function addInput(event){
@@ -90,7 +97,6 @@ function App(){
         }
       }
       setCourseSchedule(newCourseSchedule);
-
     }
   }
 
@@ -113,21 +119,21 @@ function App(){
               <div 
               style={formStyle}
               className="buttonCourseAndPreReqContainer">  
-                <input type="button" name="addprereqs" value='Add Prereq' onClick={addInput}/>
-                <input type="button" name="removeprereq" value='Remove Prereq' onClick={removeInput}/>
+                <input type="button" name="addprereqs" value='Add Prerequisite Course' onClick={addInput}/>
+                <input type="button" name="removeprereq" value='Remove Prerequisite Course' onClick={removeInput}/>
                 <input type="submit" value="Submit"  />
               </div>
               <label
-              style={formStyle}
-              className="buttonCourseAndPreReqContainer">
-                Enter Course:{' '}
+                style={formStyle}
+                className="buttonCourseAndPreReqContainer">
+                Enter Planned Course:
                 <input type="text" name="courses" />
               </label>
               {preReqList.map((prereqs,index) => {
                 return <label key={index}
                 style={formStyle}
                 className="buttonCourseAndPreReqContainer">
-                  Prereq:{' '}
+                Enter Prerequisite Course:
                   <input type="text" name="prereqs" />
               </label>
               })}
@@ -144,12 +150,12 @@ function App(){
                     key={index}>
                       Course: {course['course']}
                       {' '}
-                      PreReqs: {course['prereq']}
+                      Prerequisite Course: {course['prereq']}
                   </div>;
                 })}
           </div>
         </div>
-        <div>
+        <div style={{marginTop: '1em'}}>
           Course Schedule:
         </div>
         <div
@@ -157,11 +163,18 @@ function App(){
           className='appCourseScheduleContainer'>
             {semesters.map((semester,index) => {
                   return <Card
+                    style={{margin: '1em'}}
                     key={index}>
-                      <CardContent>
-                        {semester}
+                      <CardContent 
+                          style={appStyles}
+                          className="cardContentStyle">
+                        {semester.map((course, index)=> {
+                          return <p>
+                            {course}
+                          </p>
+                        })}
                       </CardContent>
-                  </Card>;
+                  </Card>
                 })}
         </div>
       </div>
