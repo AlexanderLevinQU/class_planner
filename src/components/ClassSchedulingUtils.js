@@ -16,7 +16,6 @@ export function CreateCourseGraph(courseList){
 export function TopologicalSort(v,visited,graph, stack) {
   visited[v] = true;
   for(const i of graph[v]){
-    console.log(i);
     if(visited[i] === false){  
       TopologicalSort(i,visited,graph, stack);
     }

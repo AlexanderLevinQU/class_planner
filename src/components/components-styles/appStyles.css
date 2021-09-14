@@ -1,12 +1,27 @@
+.appContainer{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
 .appFormContainer {
     display: flex;
     justify-content: center;
     margin-right: 1rem;
 }
 
-.appContainer {
+.appListAndFormContainer {
     display: flex;
     justify-content:center;
-    flex-direction: row-reverse;
-    align-items: flex-start;    
+    flex-direction: row;
+    align-items: flex-start;
+}
+
+.appCourseScheduleContainer {
+    display: flex;
+    justify-content: center;
+    flex-direction:row;
+    flex-wrap: wrap;
+    align-items: flex-start;
 }
